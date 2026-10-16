@@ -13,6 +13,7 @@
     "preview:render": "node scripts/render.mjs",
     "predev": "node scripts/sync-assets.mjs",
     "prebuild": "node scripts/sync-assets.mjs",
+    "prestart": "node scripts/require-build.mjs",
     "smoke": "node --experimental-strip-types scripts/smoke-scene.mjs",
     "check": "tsc --noEmit && node --experimental-strip-types scripts/smoke-scene.mjs",
     "assets:status": "node scripts/sync-assets.mjs",

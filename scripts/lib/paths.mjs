@@ -1,8 +1,17 @@
 /** Resolves kit asset keys ("urban/wall-a") to real files in the repository. */
 import path from "node:path";
 import fs from "node:fs";
+import { fileURLToPath } from "node:url";
 
-export const REPO_ROOT = path.resolve(new URL("../..", import.meta.url).pathname);
+/**
+ * Repository root (this file lives in `<root>/scripts/lib`).
+ *
+ * `fileURLToPath` matters here: on Windows `new URL(...).pathname` is
+ * "/C:/Users/.../", and feeding that to `path.resolve` yields the broken
+ * "C:\C:\Users\..." — which is what made every `npm run dev` crash with
+ * ENOENT before any assets were copied.
+ */
+export const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
 export const PACK_DIRS = {
   urban: "kenney_retro-urban-kit/Models/GLB format",
   td: "kenney_tower-defense-kit/Models/GLB format",

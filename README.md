@@ -14,6 +14,10 @@
 ```bash
 npm install
 npm run dev          # http://localhost:3000  (روی 0.0.0.0 بایند می‌شود تا در پیش‌نمایش هم کار کند)
+
+# نسخهٔ production
+npm run build
+npm start            # اگر بیلدی وجود نداشته باشد، پیام راهنما چاپ می‌شود (نه خطای داخلی Next)
 ```
 
 اسکریپت‌های کمکی:

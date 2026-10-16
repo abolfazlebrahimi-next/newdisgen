@@ -17,14 +17,15 @@ const ALL = process.argv.includes("--all");
 
 /** Models the layout actually references; --all copies every kit model. */
 function neededModels() {
-  const town = fs.readFileSync(path.join(REPO_ROOT, "src/game/layout/town.ts"), "utf8");
   const files = ["town.ts", "buildings.ts", "props.ts", "rides.ts", "palette.ts"].map((f) => path.join(REPO_ROOT, "src/game/layout", f));
   const keys = new Set();
   for (const file of files) {
     const src = fs.readFileSync(file, "utf8");
     for (const m of src.matchAll(/["'](urban|td|mini)\/([a-z0-9\-_]+)["']/g)) keys.add(`${m[1]}/${m[2]}`);
+    if (path.basename(file) !== "town.ts") continue;
+    // town.ts also references the animated character strips by full key
+    for (const m of src.matchAll(/["'](mini|urban)\/(character|wheelchair|aid)[a-z0-9\-_]*["']/g)) keys.add(m[0].replace(/["']/g, ""));
   }
-  for (const m of town.matchAll(/["'](mini|urban)\/(character|wheelchair|aid)[a-z0-9\-_]*["']/g)) keys.add(m[0].replace(/["']/g, ""));
   return keys;
 }
 
@@ -75,6 +76,7 @@ for (const [pack, dir] of Object.entries(PACK_DIRS)) {
 for (const key of needed) if (!available.has(key) && !textures.has(key)) missing.push(key);
 
 const manifest = { generatedAt: new Date().toISOString(), packs: PACK_DIRS, models: [...available].sort() };
+fs.mkdirSync(path.dirname(path.join(REPO_ROOT, "public", "assets", "manifest.json")), { recursive: true });
 fs.writeFileSync(path.join(REPO_ROOT, "public", "assets", "manifest.json"), JSON.stringify(manifest, null, 1));
 
 console.log(`assets: ${copied} copied, ${skipped} up to date, ${available.size} models available`);
