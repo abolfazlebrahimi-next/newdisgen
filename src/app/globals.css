@@ -1,0 +1,363 @@
+@import "tailwindcss";
+
+/*
+ * LOCO-style cartoon UI.
+ *
+ * Everything is built from a small set of shared pieces:
+ *   .loco-panel   cream card with a thick wooden outline
+ *   .loco-plate   blue metal plate with a light inner bevel (currency read-outs)
+ *   .loco-btn     green/gold push button that sinks when pressed
+ *   .loco-circle  round wooden action button
+ * Text uses the Vazirmatn webfont so Persian labels stay crisp at every size.
+ */
+@theme {
+  --font-sans: "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
+  --color-wood-900: #5a2f14;
+  --color-wood-800: #7b3f16;
+  --color-wood-700: #9a5a24;
+  --color-cream: #fdf3d9;
+  --color-cream-dark: #f0dcae;
+  --color-panel-blue: #3a7fc8;
+  --color-panel-blue-dark: #1f4f8f;
+  --color-loco-green: #5ec532;
+  --color-loco-green-dark: #2f7a13;
+  --color-coin: #ffcb3d;
+  --color-gem: #52c6ff;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+/* ---------------------------------------------------------------- surfaces */
+
+.loco-panel {
+  position: relative;
+  background:
+    linear-gradient(180deg, #fffdf3 0%, var(--color-cream) 55%, var(--color-cream-dark) 100%);
+  border: 3px solid #fff8e4;
+  border-radius: 22px;
+  box-shadow:
+    0 0 0 3px var(--color-wood-800),
+    0 0 0 6px #cf9a4e,
+    0 0 0 8px var(--color-wood-900),
+    0 12px 22px rgba(40, 20, 0, 0.35),
+    inset 0 -6px 0 rgba(160, 120, 60, 0.25);
+}
+
+.loco-panel::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 16px;
+  border: 2px dashed rgba(122, 72, 26, 0.22);
+  pointer-events: none;
+}
+
+.loco-plate {
+  position: relative;
+  background: linear-gradient(180deg, #4f9be0 0%, var(--color-panel-blue) 45%, var(--color-panel-blue-dark) 100%);
+  border: 2px solid #9ed3ff;
+  border-radius: 999px;
+  box-shadow:
+    0 0 0 3px #1b3f74,
+    0 4px 0 rgba(12, 30, 60, 0.5),
+    inset 0 3px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -6px 10px rgba(0, 20, 60, 0.35);
+}
+
+.loco-gold {
+  position: relative;
+  background: linear-gradient(180deg, #ffd977 0%, #f2a93c 55%, #c9761c 100%);
+  border: 2px solid #ffe9b3;
+  border-radius: 999px;
+  box-shadow:
+    0 0 0 3px #8a4a12,
+    0 4px 0 rgba(80, 40, 0, 0.45),
+    inset 0 3px 0 rgba(255, 255, 255, 0.6);
+  color: #5b2c05;
+}
+
+.loco-btn {
+  position: relative;
+  font-weight: 800;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  background: linear-gradient(180deg, #8ee85a 0%, var(--color-loco-green) 45%, var(--color-loco-green-dark) 100%);
+  color: #10330a;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 0 0 3px #1f5a0d,
+    0 6px 0 #173f09,
+    0 10px 16px rgba(0, 40, 0, 0.35),
+    inset 0 3px 0 rgba(255, 255, 255, 0.5);
+  transition: transform 90ms ease, box-shadow 90ms ease, filter 120ms ease;
+}
+.loco-btn:hover {
+  filter: brightness(1.06);
+}
+.loco-btn:active {
+  transform: translateY(4px);
+  box-shadow:
+    0 0 0 3px #1f5a0d,
+    0 2px 0 #173f09,
+    0 4px 10px rgba(0, 40, 0, 0.35),
+    inset 0 3px 0 rgba(255, 255, 255, 0.4);
+}
+
+.loco-btn-wood {
+  background: linear-gradient(180deg, #d79b55 0%, #a9682c 50%, #7f4515 100%);
+  color: #fff4dd;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+  box-shadow:
+    0 0 0 3px #5a2f14,
+    0 6px 0 #3f1f0c,
+    0 10px 16px rgba(40, 20, 0, 0.4),
+    inset 0 3px 0 rgba(255, 235, 200, 0.4);
+}
+.loco-btn-wood:active {
+  transform: translateY(4px);
+  box-shadow:
+    0 0 0 3px #5a2f14,
+    0 2px 0 #3f1f0c,
+    0 4px 10px rgba(40, 20, 0, 0.4),
+    inset 0 3px 0 rgba(255, 235, 200, 0.3);
+}
+
+.loco-btn-blue {
+  background: linear-gradient(180deg, #7cc4f5 0%, #3f8ed6 50%, #1f5a9c 100%);
+  color: #06213c;
+  box-shadow:
+    0 0 0 3px #123c66,
+    0 6px 0 #0d2c4c,
+    0 10px 16px rgba(0, 25, 60, 0.4),
+    inset 0 3px 0 rgba(255, 255, 255, 0.45);
+}
+.loco-btn-blue:active {
+  transform: translateY(4px);
+  box-shadow:
+    0 0 0 3px #123c66,
+    0 2px 0 #0d2c4c,
+    0 4px 10px rgba(0, 25, 60, 0.4),
+    inset 0 3px 0 rgba(255, 255, 255, 0.35);
+}
+
+.loco-circle {
+  position: relative;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: radial-gradient(circle at 50% 30%, #fffdf4 0%, #f6e6c2 55%, #dcc186 100%);
+  border: 3px solid #fff9e8;
+  box-shadow:
+    0 0 0 4px var(--color-wood-800),
+    0 0 0 7px #cf9a4e,
+    0 0 0 9px var(--color-wood-900),
+    0 10px 18px rgba(40, 20, 0, 0.35),
+    inset 0 -6px 0 rgba(150, 110, 50, 0.3);
+  transition: transform 90ms ease, filter 120ms ease;
+}
+.loco-circle:hover {
+  filter: brightness(1.05);
+  transform: translateY(-2px);
+}
+.loco-circle:active {
+  transform: translateY(2px) scale(0.97);
+}
+
+.loco-badge {
+  position: absolute;
+  border-radius: 999px;
+  background: radial-gradient(circle at 40% 30%, #ff8b8b, #e02b2b 70%);
+  border: 2px solid #fff;
+  box-shadow: 0 2px 0 rgba(90, 0, 0, 0.45);
+  color: #fff;
+  font-weight: 900;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+}
+
+.loco-ribbon {
+  background: linear-gradient(180deg, #ffffff 0%, #f6edd6 100%);
+  border: 2px solid #ffffff;
+  border-radius: 12px;
+  box-shadow:
+    0 0 0 3px #bf8a3c,
+    0 0 0 5px #6c3b12,
+    0 6px 0 rgba(60, 30, 0, 0.25);
+}
+
+/* ------------------------------------------------------------ 3D overlays */
+
+.loco-label-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.loco-sign {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 50% 50%;
+  width: var(--sign-w, 4rem);
+  padding: 0.18rem 0.2rem;
+  font-family: var(--font-sans);
+  font-weight: 900;
+  font-size: 0.95rem;
+  line-height: 1.1;
+  color: #ffffff;
+  text-align: center;
+  text-shadow: 0 2px 0 rgba(20, 40, 80, 0.55);
+  background: linear-gradient(180deg, #4b9de4 0%, #2a72bd 55%, #1b4f8e 100%);
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 3px #14406f,
+    0 4px 8px rgba(0, 20, 50, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.45);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.loco-marker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 50% 100%;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 6px rgba(0, 30, 60, 0.35));
+}
+
+.loco-marker-bubble {
+  display: grid;
+  place-items: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  font-size: 1.7rem;
+  font-weight: 900;
+  color: #7a3b00;
+  background: radial-gradient(circle at 45% 30%, #ffe9a3 0%, #ffc53d 55%, #f39c12 100%);
+  border: 3px solid #fffdf4;
+  border-radius: 999px;
+  box-shadow:
+    0 0 0 3px #b26a00,
+    inset 0 -4px 0 rgba(150, 90, 0, 0.3);
+}
+
+.loco-marker[data-kind="shop"] .loco-marker-bubble {
+  background: radial-gradient(circle at 45% 30%, #d6f7ff 0%, #6ed0ff 55%, #2f95d8 100%);
+  box-shadow:
+    0 0 0 3px #17618f,
+    inset 0 -4px 0 rgba(0, 60, 90, 0.25);
+}
+
+.loco-marker[data-kind="info"] .loco-marker-bubble {
+  width: 2.4rem;
+  height: 2.4rem;
+  font-size: 1.2rem;
+  background: radial-gradient(circle at 45% 30%, #ffffff 0%, #e8f6ff 55%, #b8dcf5 100%);
+  box-shadow:
+    0 0 0 3px #3f7fb0,
+    inset 0 -4px 0 rgba(0, 60, 90, 0.15);
+}
+
+/* ------------------------------------------------------------------ motion */
+
+@keyframes loco-pop {
+  0% {
+    transform: scale(0.7) translateY(14px);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.04) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+.pop-in {
+  animation: loco-pop 240ms cubic-bezier(0.2, 1.2, 0.4, 1) both;
+}
+
+@keyframes loco-bob {
+  0%,
+  100% {
+    transform: translateY(-4px);
+  }
+  50% {
+    transform: translateY(2px);
+  }
+}
+.bob {
+  animation: loco-bob 1.6s ease-in-out infinite;
+}
+
+@keyframes loco-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 205, 61, 0.85), 0 0 0 3px #8a4a12;
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgba(255, 205, 61, 0), 0 0 0 3px #8a4a12;
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 205, 61, 0), 0 0 0 3px #8a4a12;
+  }
+}
+.pulse-ring {
+  animation: loco-pulse 1.8s ease-out infinite;
+}
+
+@keyframes loco-toast-in {
+  from {
+    transform: translateY(-16px) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+.toast-in {
+  animation: loco-toast-in 200ms ease-out both;
+}
+
+@keyframes loco-shine {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(220%);
+  }
+}
+.shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.55) 50%, transparent 65%);
+  animation: loco-shine 2.6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* thin scrollbars inside the panels */
+.loco-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+.loco-scroll::-webkit-scrollbar-track {
+  background: rgba(122, 72, 26, 0.15);
+  border-radius: 999px;
+}
+.loco-scroll::-webkit-scrollbar-thumb {
+  background: #c08a3e;
+  border: 2px solid #fff6e2;
+  border-radius: 999px;
+}

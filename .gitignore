@@ -1,0 +1,13 @@
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+.DS_Store
+
+# offline renderer output (local verification only)
+/tmp-render/
+
+# kit models copied into public/ by `npm run assets:sync` (source files live in
+# the kit folders at the repository root)
+/public/assets/
